@@ -114,7 +114,7 @@ class BluetoothChatFragment : Fragment() {
         binding.buttonStop.setOnClickListener {
             ChatServer.sendMessage("f")
         }
-        binding.buttonFinish.setOnClickListener {
+        binding.buttonStart.setOnClickListener {
             ChatServer.sendMessage("z")
         }
         binding.buttonTurnAround.setOnClickListener {
