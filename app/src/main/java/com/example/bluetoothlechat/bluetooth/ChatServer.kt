@@ -75,7 +75,6 @@ object ChatServer {
     private var currentDevice: BluetoothDevice? = null
     private val _deviceConnection = MutableLiveData<DeviceConnectionState>()
     val deviceConnection = _deviceConnection as LiveData<DeviceConnectionState>
-    //private var gatt: BluetoothGatt? = null
     private var txCharacteristic: BluetoothGattCharacteristic? = null
 
     var connectedGattMap : HashMap<String, BluetoothGatt>  = HashMap<String, BluetoothGatt> ()
@@ -238,9 +237,6 @@ object ChatServer {
             .addServiceUuid(ParcelUuid(SERVICE_UUID))
             .setIncludeDeviceName(true)
 
-        /* For example - this will cause advertising to fail (exceeds size limit) */
-        //String failureData = "asdghkajsghalkxcjhfa;sghtalksjcfhalskfjhasldkjfhdskf";
-        //dataBuilder.addServiceData(Constants.Service_UUID, failureData.getBytes());
         return dataBuilder.build()
     }
 
@@ -273,7 +269,6 @@ object ChatServer {
                     connectedDeviceMap.put(device.address, device)
                 }
                 _connectionRequest.postValue(device)
-                //ToDo: Beide Devices von hier aus verbinden (hier kommen noch beide an) -> connectionRequestObserver im ChatFragment?
             } else if (isDisconnected) {
                 connectedDeviceMap.remove(device.address)
                 _deviceConnection.postValue(DeviceConnectionState.Disconnected)
@@ -331,9 +326,7 @@ object ChatServer {
             super.onServicesDiscovered(discoveredGatt, status)
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 Log.d(TAG, "onServicesDiscovered: Have gatt $discoveredGatt")
-                //gatt = discoveredGatt
                 val service = discoveredGatt.getService(UART_UUID)
-                //txCharacteristic = service.getCharacteristic(TX_UUID)
                 if(!characteristicMap.containsKey(discoveredGatt.device.address)) {
                     characteristicMap.put(discoveredGatt.device.address, service.getCharacteristic(TX_UUID))
                 }
@@ -351,7 +344,6 @@ object ChatServer {
             // Send error state to display
             val errorMessage = "Advertise failed with error: $errorCode"
             Log.d(TAG, "Advertising failed")
-            //_viewState.value = DeviceScanViewState.Error(errorMessage)
         }
 
         override fun onStartSuccess(settingsInEffect: AdvertiseSettings) {

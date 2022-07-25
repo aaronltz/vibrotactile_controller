@@ -49,11 +49,7 @@ class BluetoothChatFragment : Fragment() {
             is DeviceConnectionState.Connected -> {
                 val device = state.device
                 Log.d(TAG, "Gatt connection observer: have device $device")
-                //chatWith(device)
                 chatWith()
-            }
-            is DeviceConnectionState.Disconnected -> {
-                showDisconnected()
             }
         }
 
@@ -84,14 +80,6 @@ class BluetoothChatFragment : Fragment() {
         _binding = FragmentBluetoothChatBinding.inflate(inflater, container, false)
 
         Log.d(TAG, "chatWith: set adapter $adapter")
-        /**binding.messages.layoutManager = LinearLayoutManager(context)
-        binding.messages.adapter = adapter*/
-
-        showDisconnected()
-
-        /**binding.connectDevices.setOnClickListener {
-            findNavController().navigate(R.id.action_find_new_device)
-        }*/
 
         return binding.root
     }
@@ -142,9 +130,6 @@ class BluetoothChatFragment : Fragment() {
             binding.sliderIntensity.setProgress(0)
             ChatServer.sendMessage("q")
         }
-        /**binding.buttonShelfLeft.setOnClickListener {
-            ChatServer.sendMessage("a")
-        }*/
 
         //Right Commands
         binding.buttonRight90.setOnClickListener {
@@ -157,15 +142,6 @@ class BluetoothChatFragment : Fragment() {
             binding.sliderIntensity.setProgress(0)
             ChatServer.sendMessage("p")
         }
-        /**binding.buttonShelfRight.setOnClickListener {
-            ChatServer.sendMessage("k")
-        }*/
-    }
-
-    private fun showDisconnected() {
-        /**hideKeyboard()
-        binding.notConnectedContainer.visible()
-        binding.connectedContainer.gone()*/
     }
 
     private fun hideKeyboard() {
